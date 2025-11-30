@@ -1,0 +1,10 @@
+<div class="overlay" *ngIf="open">
+  <div class="dialog">
+    <div class="icon">🗑</div>
+    <p>{{ mensaje }}</p>
+    <div class="actions">
+      <button class="ghost" type="button" (click)="cancel.emit()">Cancelar</button>
+      <button class="danger" type="button" (click)="confirm.emit()">Eliminar</button>
+    </div>
+  </div>
+</div>

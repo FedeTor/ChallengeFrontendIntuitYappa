@@ -1,0 +1,39 @@
+<section class="page">
+  <app-header-card></app-header-card>
+  <div class="stack">
+    <app-search-bar (search)="onSearch($event)" (add)="openCreate()" (clear)="onClearSearch()"></app-search-bar>
+    <div class="table-detail">
+      <app-clientes-table [clientes]="clientes" [selectedId]="selectedCliente?.id" (select)="selectCliente($event)"
+        (view)="selectCliente($event)" (edit)="openEdit($event)" (remove)="confirmDelete($event)">
+      </app-clientes-table>
+      <app-cliente-detail [cliente]="selectedCliente"></app-cliente-detail>
+    </div>
+  </div>
+  <div class="toast-container" *ngIf="toast">
+    <app-toast [message]="toast.message" [type]="toast.type"></app-toast>
+  </div>
+  <div class="loading" *ngIf="loading">
+    <div class="spinner"></div><span>Cargando...</span>
+  </div>
+  <div class="loading action" *ngIf="actionLoading">
+    <div class="spinner small"></div><span>Procesando...</span>
+  </div>
+  <div class="error-modal" *ngIf="showErrorModal && errorMessage">
+    <div class="error-modal__backdrop"></div>
+    <div class="error-modal__content">
+      <h3>Error</h3>
+      <p class="error-modal__message">{{ errorMessage }}</p>
+      <ul *ngIf="validationErrors.length" class="error-modal__list">
+        <li *ngFor="let err of validationErrors">{{ err }}</li>
+      </ul>
+      <div class="error-modal__timer">
+        <div class="error-modal__timer-bar" [style.animation-duration.ms]="errorModalDuration"></div>
+      </div>
+    </div>
+  </div>
+  <app-cliente-form [open]="showForm" [mode]="formMode" [cliente]="selectedCliente" (submitForm)="onSubmitForm($event)" (cancel)="closeForm()"></app-cliente-form>
+  <app-delete-dialog [open]="showDelete"
+    [mensaje]="'¿Seguro que deseas eliminar al cliente ' + (selectedCliente?.nombre || '') + ' ' + (selectedCliente?.apellido || '') + '?'"
+    (confirm)="deleteCliente()" (cancel)="closeDelete()">
+  </app-delete-dialog>
+</section>

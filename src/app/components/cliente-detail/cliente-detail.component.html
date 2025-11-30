@@ -1,0 +1,20 @@
+<div class="detail-card" *ngIf="cliente; else placeholder">
+  <div class="header">
+    <div class="avatar">{{ cliente?.nombre?.[0] || '' }}{{ cliente?.apellido?.[0] || '' }}</div>
+    <div>
+      <div class="title">{{ cliente?.nombre }} {{ cliente?.apellido }}</div>
+      <div class="subtitle">{{ cliente?.razonSocial }}</div>
+    </div>
+  </div>
+  <div class="grid">
+    <div><span class="label">CUIT</span><span class="value">{{ cliente?.cuit }}</span></div>
+    <div><span class="label">Teléfono</span><span class="value">{{ cliente?.telefonoCelular }}</span></div>
+    <div><span class="label">Email</span><span class="value">{{ cliente?.email }}</span></div>
+    <div><span class="label">Fecha nacimiento</span><span class="value">{{ formatDate(cliente?.fechaNacimiento) }}</span></div>
+    <div><span class="label">Creado</span><span class="value">{{ formatDate(cliente?.fechaCreacion) }}</span></div>
+    <div><span class="label">Modificado</span><span class="value">{{ formatDate(cliente?.fechaModificacion) }}</span></div>
+  </div>
+</div>
+<ng-template #placeholder>
+  <div class="detail-card placeholder">Selecciona un cliente para ver sus detalles.</div>
+</ng-template>

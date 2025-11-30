@@ -1,0 +1,15 @@
+<div class="search-card">
+  <div class="search-wrapper">
+     <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7" /><line x1="16.65" y1="16.65" x2="21" y2="21" /></svg>
+    <input type="search" [formControl]="searchControl" placeholder="Buscar clientes por nombre..." aria-label="Buscar clientes"/>
+  </div>
+  <div class="actions">
+    <button type="button" class="ghost" (click)="onClear()" aria-label="Limpiar búsqueda">
+      Limpiar
+    </button>
+    <button type="button" class="primary" (click)="onAdd()" aria-label="Agregar cliente">
+      <span class="icon">＋</span>
+      Agregar Cliente
+    </button>
+  </div>
+</div>

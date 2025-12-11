@@ -1,53 +1,74 @@
 <div class="table-card" *ngIf="clientes?.length; else emptyState">
-  <div class="table-wrapper">
-    <table class="desktop-table">
-      <thead>
-        <tr>
-          <th>Nombre</th>
-          <th>Apellido</th>
-          <th>Teléfono</th>
-          <th>Email</th>
-          <th>CUIT</th>
-          <th>Razón Social</th>
-          <th>Acciones</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let cliente of clientes" (click)="onRowClick(cliente)" [class.selected]="cliente.id === selectedId">
-          <td class="bold">{{ cliente.nombre }}</td>
-          <td>{{ cliente.apellido }}</td>
-          <td>{{ cliente.telefonoCelular }}</td>
-          <td>{{ cliente.email }}</td>
-          <td>{{ cliente.cuit }}</td>
-          <td>{{ cliente.razonSocial }}</td>
-          <td class="actions" (click)="$event.stopPropagation()">
-            <button type="button" (click)="view.emit(cliente)" aria-label="Ver cliente"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
-            <button type="button" (click)="edit.emit(cliente)" aria-label="Editar cliente"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></button>
-            <button type="button" class="danger" (click)="remove.emit(cliente)" aria-label="Eliminar cliente"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <div class="mobile-cards">
-      <div class="mobile-card" *ngFor="let cliente of clientes" [class.selected]="cliente.id === selectedId" (click)="onRowClick(cliente)">
-        <div class="row">
-          <div>
-            <div class="name">{{ cliente.nombre }} {{ cliente.apellido }}</div>
-            <div class="sub">{{ cliente.razonSocial }}</div>
-          </div>
-          <div class="actions" (click)="$event.stopPropagation()">
-            <button type="button" (click)="view.emit(cliente)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
-            <button type="button" (click)="edit.emit(cliente)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></button>
-            <button type="button" class="danger" (click)="remove.emit(cliente)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>
-          </div>
+    <div class="table-wrapper">
+        <table class="desktop-table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Teléfono</th>
+                    <th>Email</th>
+                    <th>CUIT</th>
+                    <th>Razón Social</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cliente of clientes" (click)="onRowClick(cliente)" [class.selected]="cliente.id === selectedId">
+                    <td class="bold">{{ cliente.nombre }}</td>
+                    <td>{{ cliente.apellido }}</td>
+                    <td>{{ cliente.telefonoCelular }}</td>
+                    <td>{{ cliente.email }}</td>
+                    <td>{{ cliente.cuit }}</td>
+                    <td>{{ cliente.razonSocial }}</td>
+                    <td class="actions" (click)="$event.stopPropagation()">
+                        <!-- <button type="button" (click)="view.emit(cliente)" aria-label="Ver cliente"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+                        <button type="button" (click)="edit.emit(cliente)" aria-label="Editar cliente"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></button>
+                        <button type="button" class="danger" (click)="remove.emit(cliente)" aria-label="Eliminar cliente"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button> -->
+                        <button type="button" class="btn-view" (click)="view.emit(cliente)" aria-label="Ver cliente">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+    <circle cx="12" cy="12" r="3"></circle>
+  </svg>
+</button>
+
+                        <button type="button" class="btn-edit" (click)="edit.emit(cliente)" aria-label="Editar cliente">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path>
+  </svg>
+</button>
+
+                        <button type="button" class="btn-delete danger" (click)="remove.emit(cliente)" aria-label="Eliminar cliente">
+  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="3 6 5 6 21 6"></polyline>
+    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+    <line x1="10" y1="11" x2="10" y2="17"></line>
+    <line x1="14" y1="11" x2="14" y2="17"></line>
+  </svg>
+</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="mobile-cards">
+            <div class="mobile-card" *ngFor="let cliente of clientes" [class.selected]="cliente.id === selectedId" (click)="onRowClick(cliente)">
+                <div class="row">
+                    <div>
+                        <div class="name">{{ cliente.nombre }} {{ cliente.apellido }}</div>
+                        <div class="sub">{{ cliente.razonSocial }}</div>
+                    </div>
+                    <div class="actions" (click)="$event.stopPropagation()">
+                        <button type="button" (click)="view.emit(cliente)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg></button>
+                        <button type="button" (click)="edit.emit(cliente)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg></button>
+                        <button type="button" class="danger" (click)="remove.emit(cliente)"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg></button>
+                    </div>
+                </div>
+                <div class="meta">Teléfono: {{ cliente.telefonoCelular }}</div>
+                <div class="meta">Email: {{ cliente.email }}</div>
+                <div class="meta">CUIT: {{ cliente.cuit }}</div>
+            </div>
         </div>
-        <div class="meta">Teléfono: {{ cliente.telefonoCelular }}</div>
-        <div class="meta">Email: {{ cliente.email }}</div>
-        <div class="meta">CUIT: {{ cliente.cuit }}</div>
-      </div>
     </div>
-  </div>
 </div>
 <ng-template #emptyState>
-  <div class="table-card empty">No hay clientes para mostrar.</div>
+    <div class="table-card empty">No hay clientes para mostrar.</div>
 </ng-template>

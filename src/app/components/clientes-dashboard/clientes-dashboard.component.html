@@ -31,6 +31,16 @@
       </div>
     </div>
   </div>
+  <div class="success-modal" *ngIf="showSuccessModal">
+    <div class="success-modal__backdrop"></div>
+    <div class="success-modal__content">
+      <div class="success-modal__icon">&#10003;</div>
+      <p class="success-modal__message">{{ successModalMessage }}</p>
+      <div class="success-modal__timer">
+        <div class="success-modal__timer-bar" [style.animation-duration.ms]="successDuration"></div>
+      </div>
+    </div>
+  </div>
   <app-cliente-form [open]="showForm" [mode]="formMode" [cliente]="selectedCliente" (submitForm)="onSubmitForm($event)" (cancel)="closeForm()"></app-cliente-form>
   <app-delete-dialog [open]="showDelete"
     [mensaje]="'¿Seguro que deseas eliminar al cliente ' + (selectedCliente?.nombre || '') + ' ' + (selectedCliente?.apellido || '') + '?'"

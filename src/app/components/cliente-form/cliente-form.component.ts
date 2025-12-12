@@ -29,7 +29,7 @@ export class ClienteFormComponent implements OnChanges {
       cuit: ['', [Validators.required, Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)]],
       fechaNacimiento: ['', [Validators.required, this.fechaAnteriorAHoyValidator]],
       telefonoCelular: ['', [Validators.required, Validators.pattern(/^\d{2}\s\d{4}-\d{4}$/)]],
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.pattern(/^[^@\s]+@[^@\s]+\.[^@\s]+$/)]]
     });
   }
 

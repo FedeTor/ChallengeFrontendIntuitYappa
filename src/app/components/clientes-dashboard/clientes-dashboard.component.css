@@ -140,6 +140,85 @@
   }
 }
 
+.success-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  pointer-events: none;
+}
+
+.success-modal__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 2000;
+}
+
+.success-modal__content {
+  position: relative;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  max-width: 360px;
+  width: calc(100% - 2rem);
+  z-index: 2001;
+  pointer-events: auto;
+  text-align: center;
+}
+
+.success-modal__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.15);
+  color: #16a34a;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  margin: 0 auto 0.75rem;
+}
+
+.success-modal__message {
+  margin: 0 0 1rem;
+  font-weight: 600;
+  color: #14532d;
+}
+
+.success-modal__timer {
+  position: relative;
+  margin-top: 0.25rem;
+  height: 4px;
+  background: rgba(34, 197, 94, 0.2);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.success-modal__timer-bar {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  background: linear-gradient(90deg, #16a34a, #22c55e);
+  animation-name: successTimerFill;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+@keyframes successTimerFill {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
 @media (min-width: 1024px) {
   .stack {
     margin-left: 5rem;

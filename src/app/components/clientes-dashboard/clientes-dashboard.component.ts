@@ -9,7 +9,7 @@ import { DeleteDialogComponent } from '../delete-dialog/delete-dialog.component'
 import { ToastComponent } from '../toast/toast.component';
 import { Cliente, ClienteCreateDto, ClienteUpdateDto } from '../../models/cliente.model';
 import { ClientesService } from '../../services/clientes.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 interface ToastState {
   message: string;
@@ -48,6 +48,10 @@ export class ClientesDashboardComponent implements OnInit {
   showErrorModal = false;
   private errorModalTimeout?: ReturnType<typeof setTimeout>;
   readonly errorModalDuration = 4000;
+  showSuccessModal = false;
+  successModalMessage: string | null = null;
+  readonly successDuration = 3000;
+  private successTimeout?: ReturnType<typeof setTimeout>;
 
   ngOnInit(): void {
     this.loadClientes();
@@ -120,10 +124,17 @@ export class ClientesDashboardComponent implements OnInit {
     this.resetErrors();
     this.actionLoading = true;
     this.clientesService.create(payload).subscribe({
-      next: (cliente) => {
-        this.clientes = [cliente, ...this.clientes];
-        this.selectedCliente = cliente;
-        this.toast = { message: 'Cliente creado correctamente', type: 'success' };
+      next: (response: HttpResponse<Cliente>) => {
+        const cliente = response.body;
+        if (cliente) {
+          this.clientes = [cliente, ...this.clientes];
+          this.selectedCliente = cliente;
+        }
+        if (response.status === 201) {
+          this.openSuccessModal('Cliente creado correctamente');
+        } else {
+          this.toast = { message: 'Cliente creado correctamente', type: 'success' };
+        }
       },
       error: (err) => {
         this.handleError(err, 'No se pudo crear el cliente');
@@ -140,10 +151,11 @@ export class ClientesDashboardComponent implements OnInit {
     this.resetErrors();
     this.actionLoading = true;
     this.clientesService.update(id, payload).subscribe({
-      next: (cliente) => {
-        this.clientes = this.clientes.map((c) => (c.id === id ? { ...c, ...cliente } : c));
+      next: (response: HttpResponse<Cliente>) => {
+        const updatedCliente = response.body ?? (this.selectedCliente ? { ...this.selectedCliente, ...payload } : payload);
+        this.clientes = this.clientes.map((c) => (c.id === id ? { ...c, ...updatedCliente } : c));
         this.selectedCliente = this.clientes.find((c) => c.id === id);
-        this.toast = { message: 'Cliente actualizado correctamente', type: 'success' };
+        this.openSuccessModal('Cliente actualizado correctamente');
       },
       error: (err) => {
         this.handleError(err, 'No se pudo actualizar el cliente');
@@ -170,7 +182,9 @@ export class ClientesDashboardComponent implements OnInit {
       next: () => {
         this.clientes = this.clientes.filter((c) => c.id !== id);
         this.selectedCliente = undefined;
-        this.toast = { message: 'Cliente eliminado', type: 'success' };
+        this.toast = undefined;
+        this.showDelete = false;
+        this.openSuccessModal('Registro eliminado');
       },
       error: (err) => {
         this.handleError(err, 'No se pudo eliminar el cliente');
@@ -178,7 +192,6 @@ export class ClientesDashboardComponent implements OnInit {
       },
       complete: () => {
         this.actionLoading = false;
-        this.showDelete = false;
       }
     });
   }
@@ -195,6 +208,12 @@ export class ClientesDashboardComponent implements OnInit {
     this.errorMessage = null;
     this.validationErrors = [];
     this.showErrorModal = false;
+    this.showSuccessModal = false;
+    this.successModalMessage = null;
+    if (this.successTimeout) {
+      clearTimeout(this.successTimeout);
+      this.successTimeout = undefined;
+    }
     if (this.errorModalTimeout) {
       clearTimeout(this.errorModalTimeout);
       this.errorModalTimeout = undefined;
@@ -239,5 +258,17 @@ export class ClientesDashboardComponent implements OnInit {
     this.errorModalTimeout = setTimeout(() => {
       this.resetErrors();
     }, this.errorModalDuration);
+  }
+
+  private openSuccessModal(message: string): void {
+    this.successModalMessage = message;
+    this.showSuccessModal = true;
+    if (this.successTimeout) {
+      clearTimeout(this.successTimeout);
+    }
+    this.successTimeout = setTimeout(() => {
+      this.showSuccessModal = false;
+      this.successModalMessage = null;
+    }, this.successDuration);
   }
 }

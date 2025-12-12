@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { NgxMaskDirective } from 'ngx-mask';
 import { Cliente } from '../../models/cliente.model';
 
 @Component({
   selector: 'app-cliente-form',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, NgxMaskDirective],
   templateUrl: './cliente-form.component.html',
   styleUrl: './cliente-form.component.css'
 })
@@ -27,7 +28,7 @@ export class ClienteFormComponent implements OnChanges {
       razonSocial: ['', [Validators.required]],
       cuit: ['', [Validators.required, Validators.pattern(/^\d{2}-\d{8}-\d{1}$/)]],
       fechaNacimiento: ['', [Validators.required, this.fechaAnteriorAHoyValidator]],
-      telefonoCelular: ['', [Validators.required, Validators.pattern(/^\d{8,15}$/)]],
+      telefonoCelular: ['', [Validators.required, Validators.pattern(/^\d{2}\s\d{4}-\d{4}$/)]],
       email: ['', [Validators.required, Validators.email]]
     });
   }

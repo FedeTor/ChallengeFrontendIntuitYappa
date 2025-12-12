@@ -1,59 +1,58 @@
 <div class="overlay" *ngIf="open">
-  <div class="modal">
-    <div class="modal-header">
-      <div class="title">
-        <span class="icon">{{ mode === 'create' ? '＋' : '✏️' }}</span>
-        {{ mode === 'create' ? 'Agregar Cliente' : 'Editar Cliente' }}
-      </div>
-      <button class="close" (click)="cancel.emit()" aria-label="Cerrar">✕</button>
+    <div class="modal">
+        <div class="modal-header">
+            <div class="title">
+                <span class="icon" [innerHTML]="mode === 'create' ? '+' : '&#9998;'"></span> {{ mode === 'create' ? 'Agregar Cliente' : 'Editar Cliente' }}
+            </div>
+            <button class="close" type="button" (click)="cancel.emit()" aria-label="Cerrar">&times;</button>
+        </div>
+
+        <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+            <div class="grid">
+                <label>
+                  Nombre
+                  <input type="text" formControlName="nombre" />
+                  <span class="error" *ngIf="nombre?.touched && nombre?.invalid">Campo obligatorio.</span>
+                </label>
+                <label>
+                  Apellido
+                  <input type="text" formControlName="apellido" />
+                  <span class="error" *ngIf="apellido?.touched && apellido?.invalid">Campo obligatorio.</span>
+                </label>
+                <label>
+                  Razón Social
+                  <input type="text" formControlName="razonSocial" [readonly]="mode==='edit'" />
+                  <span class="error" *ngIf="razonSocial?.touched && razonSocial?.invalid">Campo obligatorio.</span>
+                </label>
+                <label>
+                  CUIT
+                  <input type="text" formControlName="cuit" placeholder="00-00000000-0" mask="00-00000000-0" [dropSpecialCharacters]="false" [readonly]="mode==='edit'"/>
+                  <span class="error" *ngIf="cuit?.touched && cuit?.hasError('required')">Campo obligatorio.</span>
+                  <span class="error" *ngIf="cuit?.touched && cuit?.hasError('pattern')">Formato invalido (XX-XXXXXXXX-X).</span>
+                </label>
+                <label>
+                  Teléfono Celular
+                  <input type="text" formControlName="telefonoCelular" placeholder="00 0000-0000" mask="00 0000-0000" [dropSpecialCharacters]="false"/>
+                  <span class="error" *ngIf="telefonoCelular?.touched && telefonoCelular?.hasError('required')">Campo obligatorio.</span>
+                  <span class="error" *ngIf="telefonoCelular?.touched && telefonoCelular?.hasError('pattern')">Formato invalido (XX XXXX-XXXX).</span>
+                </label>
+                <label>
+                  Email
+                  <input type="email" formControlName="email" />
+                  <span class="error" *ngIf="email?.touched && email?.hasError('required')">Campo obligatorio.</span>
+                  <span class="error" *ngIf="email?.touched && email?.hasError('email')">Email inv&aacute;lido.</span>
+                </label>
+                <label>
+                  Fecha de Nacimiento
+                  <input type="date" formControlName="fechaNacimiento" [max]="maxBirthDate" [readonly]="mode==='edit'" />
+                  <span class="error" *ngIf="fechaNacimiento?.touched && fechaNacimiento?.invalid">Debe ser anterior a hoy.</span>
+                </label>
+            </div>
+
+            <div class="actions">
+                <button type="button" class="ghost" (click)="cancel.emit()">Cancelar</button>
+                <button type="submit" class="primary">{{ mode === 'create' ? 'Crear' : 'Guardar' }}</button>
+            </div>
+        </form>
     </div>
-
-    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
-      <div class="grid">
-        <label>
-          Nombre
-          <input type="text" formControlName="nombre" />
-          <span class="error" *ngIf="nombre?.touched && nombre?.invalid">Campo obligatorio.</span>
-        </label>
-        <label>
-          Apellido
-          <input type="text" formControlName="apellido" />
-          <span class="error" *ngIf="apellido?.touched && apellido?.invalid">Campo obligatorio.</span>
-        </label>
-        <label>
-          Razón Social
-          <input type="text" formControlName="razonSocial" [readonly]="mode==='edit'" />
-          <span class="error" *ngIf="razonSocial?.touched && razonSocial?.invalid">Campo obligatorio.</span>
-        </label>
-        <label>
-          CUIT
-          <input type="text" formControlName="cuit" placeholder="00-00000000-0" [readonly]="mode==='edit'" />
-          <span class="error" *ngIf="cuit?.touched && cuit?.hasError('required')">Campo obligatorio.</span>
-          <span class="error" *ngIf="cuit?.touched && cuit?.hasError('pattern')">Formato inválido (XX-XXXXXXXX-X).</span>
-        </label>
-        <label>
-          Teléfono Celular
-          <input type="text" formControlName="telefonoCelular" />
-          <span class="error" *ngIf="telefonoCelular?.touched && telefonoCelular?.hasError('required')">Campo obligatorio.</span>
-          <span class="error" *ngIf="telefonoCelular?.touched && telefonoCelular?.hasError('pattern')">Solo dígitos (8-15).</span>
-        </label>
-        <label>
-          Email
-          <input type="email" formControlName="email" />
-          <span class="error" *ngIf="email?.touched && email?.hasError('required')">Campo obligatorio.</span>
-          <span class="error" *ngIf="email?.touched && email?.hasError('email')">Email inválido.</span>
-        </label>
-        <label>
-          Fecha de Nacimiento
-          <input type="date" formControlName="fechaNacimiento" [max]="maxBirthDate" [readonly]="mode==='edit'" />
-          <span class="error" *ngIf="fechaNacimiento?.touched && fechaNacimiento?.invalid">Debe ser anterior a hoy.</span>
-        </label>
-      </div>
-
-      <div class="actions">
-        <button type="button" class="ghost" (click)="cancel.emit()">Cancelar</button>
-        <button type="submit" class="primary">{{ mode === 'create' ? 'Crear' : 'Guardar' }}</button>
-      </div>
-    </form>
-  </div>
 </div>

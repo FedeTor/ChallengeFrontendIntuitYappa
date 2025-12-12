@@ -37,31 +37,19 @@
     color: #2563eb;
 }
 
-
-/* .modal-header .close {
-    background: transparent;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-} */
-
 .modal-header .close {
     background: transparent;
     border: none;
     font-size: 1.5rem;
     cursor: pointer;
     color: #000;
-    /* o el color que uses en tu modal */
     padding: 0.1rem 0.6rem 0.2rem 0.6rem;
-    /*      arriba  derecha abajo  izquierda */
     border-radius: 4px;
-    /* suaviza el fondo al hacer hover */
     transition: background-color 0.15s ease-in-out;
 }
 
 .modal-header .close:hover {
     background-color: rgba(0, 0, 0, 0.06);
-    /* gris muy claro y transparente */
 }
 
 form label {

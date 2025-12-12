@@ -80,6 +80,7 @@ export class ClientesDashboardComponent implements OnInit {
       this.loadClientes();
       return;
     }
+    this.selectedCliente = undefined;
     this.resetErrors();
     this.loading = true;
     this.clientesService.search(term).subscribe({
@@ -98,6 +99,7 @@ export class ClientesDashboardComponent implements OnInit {
 
   selectCliente(cliente: Cliente): void {
     this.selectedCliente = cliente;
+    this.scrollToDetail();
   }
 
   openCreate(): void {
@@ -270,5 +272,14 @@ export class ClientesDashboardComponent implements OnInit {
       this.showSuccessModal = false;
       this.successModalMessage = null;
     }, this.successDuration);
+  }
+
+  private scrollToDetail(): void {
+    setTimeout(() => {
+      const detailSection = document.querySelector('.table-detail');
+      if (detailSection) {
+        detailSection.scrollIntoView({ behavior: 'smooth', block: 'end' });
+      }
+    }, 50);
   }
 }
